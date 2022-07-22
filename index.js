@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGOODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => {
-    app.listen( process.env.PORT || 5000, () => console.log('Connected to server'))
+    app.listen( 5000, () => console.log('Connected to server'))
 }).catch(() => console.log('Failed connect to database'))
 
 app.set('view engine', 'ejs')

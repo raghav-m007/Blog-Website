@@ -4,13 +4,13 @@ const Users = require('../models/users')
 
 const requireAuth = (req, res, next) => {
     const token = req.cookies?.userLogin
-    if (token) {
-        if (req.url === '/users/signin' || req.url === '/users/signup') {
+    if(token) {
+        if(req.url === '/users/signin' || req.url === '/users/signup') {
             res.redirect('/')
             // next()
         } else {
             jwt.verify(token, 'secret-app-token', (err, decodedToken) => {
-                if (err) {
+                if(err) {
                     res.redirect('/users/signin')
                     // next()
                 } else {
@@ -19,7 +19,7 @@ const requireAuth = (req, res, next) => {
             })
         }
     } else {
-        if (req.url === '/users/signin' || req.url === '/users/signup') {
+        if(req.url === '/users/signin' || req.url === '/users/signup') {
             next()
         } else {
             res.redirect('/users/signin')
@@ -32,9 +32,9 @@ const requireAuth = (req, res, next) => {
 const currentUser = async (req, res, next) => {
     const token = req.cookies?.userLogin
 
-    if (token) {
+    if(token) {
         jwt.verify(token, 'secret-app-token', async (err, decodedToken) => {
-            if (err) {
+            if(err) {
                 res.locals.currentUser = null
                 next()
             } else {
