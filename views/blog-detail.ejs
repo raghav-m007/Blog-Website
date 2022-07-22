@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,14 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../blog-detail.css">
 </head>
+
 <body>
     <main class="container">
         <%- include('./layout/navbar') %>
-        <section class="page blog__details__container flex__center">
-            
-        </section>
-        <%- include('./layout/footer') %>
+            <section class="page blog__details__container flex__center">
+
+            </section>
+            <%- include('./layout/footer') %>
     </main>
 
 
@@ -23,7 +25,7 @@
         const blogId = location.pathname.split('/')[2]
         const domain = 'https://node-live-blog.herokuapp.com' || 'http://localhost:5000'
 
-        fetch(`${domain}/api/v1/blogs/${blogId}`).then(res => res.json()).then(({data, ...res}) => {
+        fetch(`${domain}/api/v1/blogs/${blogId}`).then(res => res.json()).then(({ data, ...res }) => {
             document.querySelector('.blog__details__container').innerHTML = `
                 <div class="blog__details">
                     <div class="blog__details__image">
@@ -38,7 +40,7 @@
                             <h1>${data.blogTitle}</h1>
                             <p>${data.blogDescription}</p>
                         </div>
-                        <div class="page__back btn">Kembali</div>
+                        <div class="page__back btn">Back</div>
                     </div>
                 </div>
             `
@@ -49,4 +51,5 @@
         })
     </script>
 </body>
+
 </html>
