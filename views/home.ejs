@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>
+        <%= title %>
+    </title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
 </head>
+
 <body>
     <main class="container">
         <%- include('./layout/navbar') %>
-        <section class="page">
-            <div class="page__loading flex__center">
-                <div class="page__loading__box">
-                    Loading.....
+            <section class="page">
+                <div class="page__loading flex__center">
+                    <div class="page__loading__box">
+                        Loading.....
+                    </div>
                 </div>
-            </div>
-            <div class="blog__categories__container flexx">
-                <div class="blog__category active" data-id="all">All Category</div>
-                <div class="blog__category" data-id="programming">Programming</div>
-                <div class="blog__category" data-id="traveller">Traveller</div>
-                <div class="blog__category" data-id="graphic_design">Graphic Design</div>
-                <div class="blog__category" data-id="ui/ux">UI/UX</div>
-                <div class="blog__category" data-id="digital_marketing">Digital Marketing</div>
-            </div>
+                <div class="blog__categories__container flexx">
+                    <div class="blog__category active" data-id="all">All Category</div>
+                    <div class="blog__category" data-id="programming">Programming</div>
+                    <div class="blog__category" data-id="traveller">Traveller</div>
+                    <div class="blog__category" data-id="graphic_design">Graphic Design</div>
+                    <div class="blog__category" data-id="ui/ux">UI/UX</div>
+                    <div class="blog__category" data-id="digital_marketing">Digital Marketing</div>
+                </div>
 
-            <div class="blogs__container"> 
-            </div>
-        </section>
-        <%- include('./layout/footer') %>
+                <div class="blogs__container">
+                </div>
+            </section>
+            <%- include('./layout/footer') %>
     </main>
 
 
@@ -39,30 +43,30 @@
         const blogsCategory = document.querySelectorAll('.blog__category')
         const pageLoading = document.querySelector('.page__loading')
 
-        const domain = 'https://node-live-blog.herokuapp.com/'|| 'http://localhost:5000'
+        const domain = 'https://node-live-blog.herokuapp.com' || 'http://localhost:5000'
 
 
         let blogs = []
         let ctys = []
 
         function handleCtys(act, id) {
-            if(act === 'remove') {
-                for(let i = 0; i < ctys.length; i++){ 
-                    if (ctys[i] === id) { 
-                        ctys.splice(i, 1); 
+            if (act === 'remove') {
+                for (let i = 0; i < ctys.length; i++) {
+                    if (ctys[i] === id) {
+                        ctys.splice(i, 1);
                     }
                 }
             } else {
                 ctys.push(id)
             }
-        }  
+        }
 
         blogsCategory.forEach(blogCty => {
-            if(blogCty.classList.contains('active')) {
+            if (blogCty.classList.contains('active')) {
                 handleCtys('add', blogCty.dataset.id)
             }
             blogCty.addEventListener('click', (e) => {
-                if(blogCty.classList.contains('active')) {
+                if (blogCty.classList.contains('active')) {
                     blogCty.classList.remove('active')
                     handleCtys('remove', blogCty.dataset.id)
                     displayBlogs(ctys)
@@ -76,7 +80,7 @@
 
         fetching()
 
-        
+
         function fetching() {
             pageLoading.style.display = 'flex'
             fetch(`${domain}/api/v1/blogs`).then(res => res.json()).then(res => {
@@ -89,7 +93,7 @@
 
         function displayBlogs(cty) {
             const updatedBlogs = blogs.filter(blog => {
-                if(cty.includes('all')) {
+                if (cty.includes('all')) {
                     return blog
                 } else {
                     return cty.includes(blog.blogCategory)
@@ -97,11 +101,11 @@
             })
             let dataTemp = ``
 
-            if(blogs.length < 1) {
+            if (blogs.length < 1) {
                 blogsContainer.classList.remove('blogs__container')
                 blogsContainer.classList.add('blogs__empty')
-                    dataTemp = '<p>Sorry, Blogs not available</p>'
-            } else if(updatedBlogs.length < 1) {
+                dataTemp = '<p>Sorry, Blogs not available</p>'
+            } else if (updatedBlogs.length < 1) {
                 blogsContainer.classList.remove('blogs__container')
                 blogsContainer.classList.add('blogs__empty')
                 dataTemp = '<p>Blogs category what you want is not available</p>'
@@ -121,9 +125,9 @@
                                     </div>
                                     <div class="blog__detail__content">
                                         <h2>${blog.blogTitle.length > 35 ? `${blog.blogTitle.slice(0, 35)}...` : blog.blogTitle}</h2>
-                                        <p>${blog.blogDescription.length > 150 ? 
-                                            `${blog.blogDescription.slice(0, 150)}...<a href="/blogs/${blog._id}">Read More</a>` : 
-                                            blog.blogDescription}</p>
+                                        <p>${blog.blogDescription.length > 150 ?
+                            `${blog.blogDescription.slice(0, 150)}...<a href="/blogs/${blog._id}">Read More</a>` :
+                            blog.blogDescription}</p>
                                     </div>
                                 </div>
                                 <div class="blog__detail__bottom flex__between">
@@ -142,8 +146,9 @@
                 })
             })
         }
-        
+
 
     </script>
 </body>
+
 </html>
